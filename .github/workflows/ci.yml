@@ -1,0 +1,30 @@
+name: Windows CI
+
+on:
+  push:
+    branches: [ main, ci_test ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Show environment info
+      run: |
+        echo "Current directory:"
+        cd
+        echo "Files in repository:"
+        dir
+
+    - name: Build with Makefile
+      run: |
+        make build
+
+    - name: Run the application
+      run: |
+        make run
