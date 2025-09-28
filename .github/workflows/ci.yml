@@ -1,35 +1,34 @@
 name: Windows CI
 
-on:
-  push:
-    branches: [ main, ci_test ]
-  pull_request:
-    branches: [ main ]
+on: [push, pull_request]
 
 jobs:
   build-and-test:
     runs-on: windows-latest
-
+    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Debug - Show files structure
-      shell: cmd
+    - uses: actions/checkout@v3
+    
+    - name: Build and Run HW1
+      shell: pwsh
       run: |
-        echo Current directory:
-        cd
-        echo Files list:
-        dir
-
-    - name: Debug - Show CMake version
-      run: cmake --version
-
-    - name: Configure with CMake
-      run: cmake -B build -S .
-
-    - name: Build project
-      run: cmake --build build --config Release
-
-    - name: Run application
-      run: .\build\Release\main.exe
+        cd 2025.09.20_HW1
+        cmake -B build -S .
+        cmake --build build
+        if (Test-Path "build/Debug/hw1.exe") { 
+          build/Debug/hw1.exe 
+        } else { 
+          build/hw1.exe 
+        }
+    
+    - name: Build and Run HW2
+      shell: pwsh  
+      run: |
+        cd 2025.09.28_HW2
+        cmake -B build -S .
+        cmake --build build
+        if (Test-Path "build/Debug/hw2.exe") { 
+          build/Debug/hw2.exe 
+        } else { 
+          build/hw2.exe 
+        }
