@@ -32,3 +32,15 @@ jobs:
         } else { 
           build/hw2.exe 
         }
+
+    - name: Build and Run HW3
+      shell: pwsh  
+      run: |
+        cd 2025.10.04_HW3
+        cmake -B build -S .
+        cmake --build build
+        if (Test-Path "build/Debug/hw3.exe") { 
+          build/Debug/hw3.exe 
+        } else { 
+          build/hw3.exe 
+        }
