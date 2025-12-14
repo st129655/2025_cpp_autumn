@@ -98,3 +98,15 @@ jobs:
             & $_.FullName 
           }
         }
+    - name: Build and Run HW6
+      shell: pwsh
+      run: |
+        cd 2025.10.25_HW6
+        cmake -B build -S .
+        cmake --build build
+        if (Test-Path "build/Debug/hw6.exe") { 
+          build/Debug/hw6.exe 
+        } else { 
+          build/hw6.exe 
+        }
+    
