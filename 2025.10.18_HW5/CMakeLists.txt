@@ -3,13 +3,9 @@ project(HW5)
 
 set(CMAKE_CXX_STANDARD 17)
 
+set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
 
-include(FetchContent)
-FetchContent_Declare(
-  googletest
-  URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.tar.gz
-)
-FetchContent_MakeAvailable(googletest)
+find_package(GTest REQUIRED)
 
 add_executable(hw5 main.cpp)
-target_link_libraries(hw5 gtest gtest_main)
+target_link_libraries(hw5 GTest::gtest GTest::gtest_main)

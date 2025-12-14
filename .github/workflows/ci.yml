@@ -67,12 +67,19 @@ jobs:
       shell: pwsh  
       run: |
         cd 2025.10.18_HW5
-        cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
-        cmake --build build
-        if (Test-Path "build/Debug/hw5.exe") { 
-          build/Debug/hw5.exe 
-        } elseif (Test-Path "build/Release/hw5.exe") {
-          build/Release/hw5.exe
+        git clone https://github.com/Microsoft/vcpkg.git
+        .\vcpkg\bootstrap-vcpkg.bat
+        .\vcpkg\vcpkg install gtest:x64-windows
+        
+        cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE="vcpkg/scripts/buildsystems/vcpkg.cmake"
+        cmake --build build --config Release
+        
+        if (Test-Path "build/Release/hw5.exe") { 
+          build/Release/hw5.exe 
         } else { 
-          build/hw5.exe 
+          echo "Файл не найден. Ищем в других местах..."
+          Get-ChildItem -Path build -Recurse -Filter "hw5.exe" | ForEach-Object { 
+            echo "Найден: $($_.FullName)"
+            & $_.FullName 
+          }
         }
