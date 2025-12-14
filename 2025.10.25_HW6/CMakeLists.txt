@@ -1,2 +1,3 @@
-project(array)
-add_executable(array main.cpp)
+cmake_minimum_required(VERSION 3.10)
+project(hw6)
+add_executable(hw6 main.cpp) 
