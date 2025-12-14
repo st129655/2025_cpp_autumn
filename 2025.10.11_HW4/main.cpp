@@ -1,8 +1,8 @@
+#define _CRT_SECURE_NO_WARNINGS  
 #include <iostream>
 #include <cstring>
 #include <cstdlib>
 
-#define _CRT_SECURE_NO_WARNINGS  
 
 class String {
 private:

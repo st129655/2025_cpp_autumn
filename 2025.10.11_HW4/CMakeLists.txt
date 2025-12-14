@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
-project(HW4)
+project(hw4)
 
-add_executable(hw4 main.cpp)  # ← ИМЯ ИСПОЛНЯЕМОГО ФАЙЛА
-
+# Добавить флаги для MSVC
 if(MSVC)
-    target_compile_options(hw4 PRIVATE /W4 /WX /wd4100)
-else()
-    target_compile_options(hw4 PRIVATE -Wall -Wextra -Werror -pedantic)
+    add_compile_options(/W4 /WX)
+    add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
 endif()
+
+add_executable(hw4 main.cpp)
