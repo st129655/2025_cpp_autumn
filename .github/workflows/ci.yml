@@ -1,0 +1,113 @@
+name: Windows CI
+
+on: [push, pull_request]
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Build and Run HW1
+      shell: pwsh
+      run: |
+        cd 2025.09.20_HW1
+        cmake -B build -S .
+        cmake --build build
+        if (Test-Path "build/Debug/hw1.exe") { 
+          build/Debug/hw1.exe 
+        } else { 
+          build/hw1.exe 
+        }
+    
+    - name: Build and Run HW2
+      shell: pwsh  
+      run: |
+        cd 2025.09.28_HW2
+        cmake -B build -S .
+        cmake --build build
+        if (Test-Path "build/Debug/hw2.exe") { 
+          build/Debug/hw2.exe 
+        } else { 
+          build/hw2.exe 
+        }
+
+    - name: Build and Run HW3
+      shell: pwsh  
+      run: |
+        cd 2025.10.04_HW3
+        cmake -B build -S .
+        cmake --build build
+        if (Test-Path "build/Debug/hw3.exe") { 
+          build/Debug/hw3.exe 
+        } else { 
+          build/hw3.exe 
+        }
+        
+    - name: Build and Run HW4
+      shell: pwsh  
+      run: |
+        cd 2025.10.11_HW4
+        cmake -B build -S .
+        cmake --build build
+        if (Test-Path "build/Debug/hw4.exe") { 
+          build/Debug/hw4.exe 
+        } else { 
+          build/hw4.exe 
+        }
+        
+    - name: Install GoogleTest for HW5
+      shell: pwsh
+      run: |
+        cd 2025.10.18_HW5
+        git clone https://github.com/Microsoft/vcpkg.git
+        .\vcpkg\bootstrap-vcpkg.bat
+        .\vcpkg\vcpkg install gtest:x64-windows
+        
+    - name: Build and Run TextEditor
+      shell: pwsh  
+      run: |
+        cd 2025.10.18_HW5/TextEditor
+        cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE="../../vcpkg/scripts/buildsystems/vcpkg.cmake"
+        cmake --build build --config Release
+        if (Test-Path "build/Release/text_editor.exe") { 
+          build/Release/text_editor.exe 
+        } elseif (Test-Path "build/Debug/text_editor.exe") {
+          build/Debug/text_editor.exe 
+        } else { 
+          Get-ChildItem -Path build -Recurse -Filter "text_editor.exe" | ForEach-Object { 
+            echo "Найден: $($_.FullName)"
+            & $_.FullName 
+          }
+        }
+        
+    - name: Build and Run BankAccount
+      shell: pwsh  
+      run: |
+        cd 2025.10.18_HW5/BankAccount
+        cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE="../../vcpkg/scripts/buildsystems/vcpkg.cmake"
+        cmake --build build --config Release
+        if (Test-Path "build/Release/bank_account.exe") { 
+          build/Release/bank_account.exe 
+        } elseif (Test-Path "build/Debug/bank_account.exe") {
+          build/Debug/bank_account.exe 
+        } else { 
+          Get-ChildItem -Path build -Recurse -Filter "bank_account.exe" | ForEach-Object { 
+            echo "Найден: $($_.FullName)"
+            & $_.FullName 
+          }
+        }
+    - name: Build and Run HW6
+      shell: pwsh  
+      run: |
+        cd 2025.10.25_HW6
+        cmake -B build -S .
+        cmake --build build
+        if (Test-Path "build/Debug/hw6.exe") { 
+          build/Debug/hw6.exe 
+        } else { 
+          build/hw6.exe 
+        }
+
+    
