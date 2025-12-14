@@ -44,3 +44,16 @@ jobs:
         } else { 
           build/hw3.exe 
         }
+        
+        
+    - name: Build and Run HW4
+      shell: pwsh  
+      run: |
+        cd 2025.10.11_HW4
+        cmake -B build -S .
+        cmake --build build
+        if (Test-Path "build/Debug/hw4.exe") { 
+          build/Debug/hw4.exe 
+        } else { 
+          build/hw4.exe 
+        }
