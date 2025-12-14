@@ -1,8 +1,6 @@
-#define _CRT_SECURE_NO_WARNINGS  
 #include <iostream>
 #include <cstring>
 #include <cstdlib>
-
 
 class String {
 private:
@@ -15,7 +13,6 @@ private:
         Proxy(String* parent, int start) : parent(parent), start(start) {}
         
         String operator[](int end) const {
-          
             if (start < 0 || end < start || start >= static_cast<int>(parent->size) || end > static_cast<int>(parent->size)) {
                 return String(""); 
             }
@@ -38,7 +35,7 @@ public:
     String(const char* str = "") {
         size = strlen(str);
         this->str = new char[size + 1];
-        strcpy(this->str, str);
+        memcpy(this->str, str, size + 1);
     }
     
     String(size_t n, char c) : size(n) {
@@ -49,24 +46,21 @@ public:
         str[size] = '\0';
     }
     
-
     ~String() {
         delete[] str;
     }
     
-
     String(const String& other) : size(other.size) {
         str = new char[size + 1];
-        strcpy(str, other.str);
+        memcpy(str, other.str, size + 1);
     }
     
-
     String& operator=(const String& other) {
         if (this != &other) {
             delete[] str;
             size = other.size;
             str = new char[size + 1];
-            strcpy(str, other.str);
+            memcpy(str, other.str, size + 1);
         }
         return *this;
     }
@@ -75,25 +69,22 @@ public:
         return Proxy(this, i);
     }
     
-
     Proxy operator[](int i) const {
         return Proxy(const_cast<String*>(this), i);
     }
     
-
     void append(const String& other) {
         size_t new_size = size + other.size;
         char* new_str = new char[new_size + 1];
         
-        strcpy(new_str, str);
-        strcat(new_str, other.str);
+        memcpy(new_str, str, size);
+        memcpy(new_str + size, other.str, other.size + 1);
         
         delete[] str;
         str = new_str;
         size = new_size;
     }
     
-
     friend std::ostream& operator<<(std::ostream& stream, const String& text) {
         stream << text.str;
         return stream;

@@ -1,0 +1,2 @@
+add_executable(texteditor_test test_texteditor.cpp)
+target_link_libraries(texteditor_test gtest gtest_main pthread)
