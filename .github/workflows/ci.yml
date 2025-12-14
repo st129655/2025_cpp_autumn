@@ -61,24 +61,39 @@ jobs:
       shell: pwsh
       run: |
         cd 2025.10.18_HW5
-        vcpkg install gtest:x64-windows
-        
-    - name: Build and Run HW5
-      shell: pwsh  
-      run: |
-        cd 2025.10.18_HW5
         git clone https://github.com/Microsoft/vcpkg.git
         .\vcpkg\bootstrap-vcpkg.bat
         .\vcpkg\vcpkg install gtest:x64-windows
         
-        cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE="vcpkg/scripts/buildsystems/vcpkg.cmake"
+    - name: Build and Run TextEditor
+      shell: pwsh  
+      run: |
+        cd 2025.10.18_HW5/TextEditor
+        cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE="../../vcpkg/scripts/buildsystems/vcpkg.cmake"
         cmake --build build --config Release
-        
-        if (Test-Path "build/Release/hw5.exe") { 
-          build/Release/hw5.exe 
+        if (Test-Path "build/Release/text_editor.exe") { 
+          build/Release/text_editor.exe 
+        } elseif (Test-Path "build/Debug/text_editor.exe") {
+          build/Debug/text_editor.exe 
         } else { 
-          echo "Файл не найден. Ищем в других местах..."
-          Get-ChildItem -Path build -Recurse -Filter "hw5.exe" | ForEach-Object { 
+          Get-ChildItem -Path build -Recurse -Filter "text_editor.exe" | ForEach-Object { 
+            echo "Найден: $($_.FullName)"
+            & $_.FullName 
+          }
+        }
+        
+    - name: Build and Run BankAccount
+      shell: pwsh  
+      run: |
+        cd 2025.10.18_HW5/BankAccount
+        cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE="../../vcpkg/scripts/buildsystems/vcpkg.cmake"
+        cmake --build build --config Release
+        if (Test-Path "build/Release/bank_account.exe") { 
+          build/Release/bank_account.exe 
+        } elseif (Test-Path "build/Debug/bank_account.exe") {
+          build/Debug/bank_account.exe 
+        } else { 
+          Get-ChildItem -Path build -Recurse -Filter "bank_account.exe" | ForEach-Object { 
             echo "Найден: $($_.FullName)"
             & $_.FullName 
           }
