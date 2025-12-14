@@ -1,2 +1,3 @@
-add_executable(texteditor_test test_texteditor.cpp)
-target_link_libraries(texteditor_test gtest gtest_main pthread)
+cmake_minimum_required(VERSION 3.10)
+project(TextEditorTest)
+add_executable(texteditor_test main.cpp)
