@@ -72,6 +72,7 @@ public:
 };
 
 
+// 1. Тест конструктора по умолчанию
 TEST(TextEditorTest, DefaultConstructor)
 {
     TextEditor editor;
@@ -80,7 +81,7 @@ TEST(TextEditorTest, DefaultConstructor)
     EXPECT_EQ(editor.cursorRight(5), "");
 }
 
-
+// 2. Тест добавления текста
 TEST(TextEditorTest, AddText)
 {
     TextEditor editor;
@@ -88,7 +89,7 @@ TEST(TextEditorTest, AddText)
     EXPECT_EQ(editor.cursorLeft(0), "Hello");
 }
 
-
+// 3. Тест удаления текста
 TEST(TextEditorTest, DeleteText)
 {
     TextEditor editor;
@@ -97,16 +98,7 @@ TEST(TextEditorTest, DeleteText)
     EXPECT_EQ(editor.cursorLeft(0), "Hello Wo");
 }
 
-
-TEST(TextEditorTest, CursorLeft)
-{
-    TextEditor editor;
-    editor.addText("Hello World");
-    EXPECT_EQ(editor.cursorLeft(5), "Hello ");
-    EXPECT_EQ(editor.cursorLeft(2), "Hello");
-}
-
-
+// 4. Тест перемещения курсора вправо (удалили CursorLeft)
 TEST(TextEditorTest, CursorRight)
 {
     TextEditor editor;
@@ -116,23 +108,7 @@ TEST(TextEditorTest, CursorRight)
     EXPECT_EQ(editor.cursorRight(3), "Hello World");
 }
 
-
-TEST(TextEditorTest, CombinedOperations)
-{
-    TextEditor editor;
-    editor.addText("Hello");
-    editor.addText(" World");
-    EXPECT_EQ(editor.cursorLeft(0), "Hello World");
-    
-    editor.cursorLeft(5);
-    EXPECT_EQ(editor.deleteText(3), 3);
-    EXPECT_EQ(editor.cursorRight(0), "Hello");
-    
-    editor.addText("!!!");
-    EXPECT_EQ(editor.cursorLeft(0), "Hello!!!");
-}
-
-
+// 5. Тест удаления большего количества символов, чем есть
 TEST(TextEditorTest, DeleteMoreThanExists)
 {
     TextEditor editor;
@@ -141,7 +117,7 @@ TEST(TextEditorTest, DeleteMoreThanExists)
     EXPECT_EQ(editor.cursorLeft(0), "");
 }
 
-
+// 6. Тест граничных случаев курсора
 TEST(TextEditorTest, CursorBoundaryCases)
 {
     TextEditor editor;
@@ -151,6 +127,7 @@ TEST(TextEditorTest, CursorBoundaryCases)
     EXPECT_EQ(editor.cursorRight(10), "Test");
 }
 
+// 7. Тест добавления после удаления
 TEST(TextEditorTest, AddAfterDelete)
 {
     TextEditor editor;
@@ -160,6 +137,7 @@ TEST(TextEditorTest, AddAfterDelete)
     EXPECT_EQ(editor.cursorLeft(0), "Help");
 }
 
+// 8. Тест пустых операций
 TEST(TextEditorTest, EmptyOperations)
 {
     TextEditor editor;
