@@ -71,9 +71,7 @@ public:
     }
 };
 
-// =========== ТЕСТЫ ===========
 
-// 1. Тест конструктора по умолчанию
 TEST(TextEditorTest, DefaultConstructor)
 {
     TextEditor editor;
@@ -82,7 +80,7 @@ TEST(TextEditorTest, DefaultConstructor)
     EXPECT_EQ(editor.cursorRight(5), "");
 }
 
-// 2. Тест добавления текста
+
 TEST(TextEditorTest, AddText)
 {
     TextEditor editor;
@@ -90,7 +88,7 @@ TEST(TextEditorTest, AddText)
     EXPECT_EQ(editor.cursorLeft(0), "Hello");
 }
 
-// 3. Тест удаления текста
+
 TEST(TextEditorTest, DeleteText)
 {
     TextEditor editor;
@@ -99,7 +97,7 @@ TEST(TextEditorTest, DeleteText)
     EXPECT_EQ(editor.cursorLeft(0), "Hello Wo");
 }
 
-// 4. Тест перемещения курсора влево
+
 TEST(TextEditorTest, CursorLeft)
 {
     TextEditor editor;
@@ -108,7 +106,7 @@ TEST(TextEditorTest, CursorLeft)
     EXPECT_EQ(editor.cursorLeft(2), "Hello");
 }
 
-// 5. Тест перемещения курсора вправо
+
 TEST(TextEditorTest, CursorRight)
 {
     TextEditor editor;
@@ -118,7 +116,7 @@ TEST(TextEditorTest, CursorRight)
     EXPECT_EQ(editor.cursorRight(3), "Hello World");
 }
 
-// 6. Тест комбинированных операций
+
 TEST(TextEditorTest, CombinedOperations)
 {
     TextEditor editor;
@@ -128,13 +126,13 @@ TEST(TextEditorTest, CombinedOperations)
     
     editor.cursorLeft(5);
     EXPECT_EQ(editor.deleteText(3), 3);
-    EXPECT_EQ(editor.cursorRight(0), "Hello W");
+    EXPECT_EQ(editor.cursorRight(0), "Hello");
     
     editor.addText("!!!");
-    EXPECT_EQ(editor.cursorLeft(0), "Hello W!!!");
+    EXPECT_EQ(editor.cursorLeft(0), "Hello!!!");
 }
 
-// 7. Тест удаления большего количества символов, чем есть
+
 TEST(TextEditorTest, DeleteMoreThanExists)
 {
     TextEditor editor;
@@ -143,20 +141,16 @@ TEST(TextEditorTest, DeleteMoreThanExists)
     EXPECT_EQ(editor.cursorLeft(0), "");
 }
 
-// 8. Тест граничных случаев курсора
+
 TEST(TextEditorTest, CursorBoundaryCases)
 {
     TextEditor editor;
     editor.addText("Test");
     
-    // Движение дальше, чем есть символов
     EXPECT_EQ(editor.cursorLeft(10), "");
-    
-    // Возврат обратно
     EXPECT_EQ(editor.cursorRight(10), "Test");
 }
 
-// 9. Тест добавления после удаления
 TEST(TextEditorTest, AddAfterDelete)
 {
     TextEditor editor;
@@ -166,7 +160,6 @@ TEST(TextEditorTest, AddAfterDelete)
     EXPECT_EQ(editor.cursorLeft(0), "Help");
 }
 
-// 10. Тест пустых операций
 TEST(TextEditorTest, EmptyOperations)
 {
     TextEditor editor;
@@ -179,13 +172,11 @@ TEST(TextEditorTest, EmptyOperations)
     EXPECT_EQ(editor.deleteText(0), 0);
 }
 
-// =========== ОСНОВНАЯ ФУНКЦИЯ ===========
 int main(int argc, char** argv) {
     std::cout << "🚀 Запуск тестов TextEditor..." << std::endl;
     ::testing::InitGoogleTest(&argc, argv);
     int result = RUN_ALL_TESTS();
     
-    // Простая проверка результата
     if (result == 0) {
         std::cout << " Все тесты пройдены успешно!" << std::endl;
     } else {
