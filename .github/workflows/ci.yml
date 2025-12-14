@@ -99,7 +99,7 @@ jobs:
           }
         }
     - name: Build and Run HW6
-      shell: pwsh
+      shell: pwsh  
       run: |
         cd 2025.10.25_HW6
         cmake -B build -S .
@@ -109,4 +109,5 @@ jobs:
         } else { 
           build/hw6.exe 
         }
+
     
