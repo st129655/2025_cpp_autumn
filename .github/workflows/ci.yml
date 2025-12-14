@@ -45,7 +45,6 @@ jobs:
           build/hw3.exe 
         }
         
-        
     - name: Build and Run HW4
       shell: pwsh  
       run: |
@@ -57,14 +56,23 @@ jobs:
         } else { 
           build/hw4.exe 
         }
+        
+    - name: Install GoogleTest for HW5
+      shell: pwsh
+      run: |
+        cd 2025.10.18_HW5
+        vcpkg install gtest:x64-windows
+        
     - name: Build and Run HW5
       shell: pwsh  
       run: |
         cd 2025.10.18_HW5
-        cmake -B build -S .
+        cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
         cmake --build build
         if (Test-Path "build/Debug/hw5.exe") { 
           build/Debug/hw5.exe 
+        } elseif (Test-Path "build/Release/hw5.exe") {
+          build/Release/hw5.exe
         } else { 
           build/hw5.exe 
         }
